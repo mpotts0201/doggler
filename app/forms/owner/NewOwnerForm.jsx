@@ -1,17 +1,16 @@
 import React, {Component} from "react";
 import {Form, FormTextInput} from "lib/forms/components";
-import createForm from "./dog";
+import createForm from "./owner";
 
-export default class NewDogForm extends Component {
+export default class NewOwnerForm extends Component {
     constructor(props) {
         super(props);
-        this.newDogForm = createForm({
+        this.newOwnerForm = createForm({
             onSubmit: this.handleSubmit,
             initialValues: {
                 name: "",
                 age: 0,
                 gender: "",
-                description: "",
                 image_src: ""
             }
         });
@@ -25,20 +24,19 @@ export default class NewDogForm extends Component {
         return (
             <div>
                 <Form
-                    form={this.newDogForm}
+                    form={this.newOwnerForm}
                     render={(props) => {
                         const {secure, values} = props;
                         const secure_name = secure.name;
                         const secure_age = secure.age;
                         const secure_gender = secure.gender;
-                        const secure_description = secure.description;
                         const secure_image_src = secure.image_src;
-                        const has_errors = errors[secure_name] || errors[secure_age] || errors[secure_gender] || errors[secure_description] || errors[secure_image_src];
-                        const fields_complete = values[secure_name] !== "" && values[secure_age] !== "" && values[secure_gender] !== "" && values[secure_description] !== "" && values[secure_image_src] !== "";
+                        const has_errors = errors[secure_name] || errors[secure_age] || errors[secure_gender] || errors[secure_image_src];
+                        const fields_complete = values[secure_name] !== "" && values[secure_age] !== "" && values[secure_gender] !== "" && values[secure_image_src] !== "";
                         const buttonReady = fields_complete && !has_errors;
                         return (
                             <div>
-                                <h3 className="title">Add a Dog</h3>
+                                <h3 className="title">Add an Owner</h3>
                                 <div className="field">
                                     <label className="label">Name</label>
                                     <FormTextInput {...props} className="input" name="name" />
@@ -56,12 +54,6 @@ export default class NewDogForm extends Component {
                                     <FormTextInput {...props} className="input" name="gender" />
                                     {!has_errors && <div className="icon-svg-form" dangerouslySetInnerHTML={{__html: check_circle_outline}} />}
                                     {touched[secure_gender] && errors[secure_gender] ? <div className="field-spacer error">{errors[secure_gender]}</div> : <div className="field-spacer" />}
-                                </div>
-                                <div className="field">
-                                    <label className="label">Description</label>
-                                    <FormTextInput {...props} className="input" name="description" />
-                                    {!has_errors && <div className="icon-svg-form" dangerouslySetInnerHTML={{__html: check_circle_outline}} />}
-                                    {touched[secure_description] && errors[secure_description] ? <div className="field-spacer error">{errors[secure_description]}</div> : <div className="field-spacer" />}
                                 </div>
                                 <div className="field">
                                     <label className="label">Image Link</label>

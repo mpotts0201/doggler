@@ -15,7 +15,7 @@ export default createForm(
         },
         gender: {
             label: "Gender",
-            yup: yup.string().required("Please use an email.")
+            yup: yup.string().required()
         },
         image_src: {
             label: "Image Source",

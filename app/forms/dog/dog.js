@@ -15,7 +15,7 @@ export default createForm(
         },
         gender: {
             label: "Gender",
-            yup: yup.string().required("Please use an email.")
+            yup: yup.string().required()
         },
         description: {
             label: "Description",
