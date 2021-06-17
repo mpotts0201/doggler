@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import SwipeCard from "../components/SwipeCard";
 import Header from "../components/Header";
 import CardControls from "../components/CardControls";
+import Loader from "../components/Loader";
 import axios from "axios";
 import styles from "../styles/Swipe.module.css";
 
@@ -36,14 +37,12 @@ export default function Swipe() {
         });
     };
 
-    if (loading) return <h1>Loading...</h1>;
-
     if (!loading && cards.length === 0) return <h1>Out of swipes</h1>;
 
     return (
         <div className={styles.container}>
             <Header />
-            {renderCards()}
+            {loading ? <Loader /> : renderCards()}
             <CardControls />
         </div>
     );

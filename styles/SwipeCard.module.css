@@ -27,7 +27,7 @@
     top: 500px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) 70%);
+    background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) 40%);
     width: 350px;
 }
 
@@ -51,5 +51,5 @@
     border-radius: 15px;
     object-fit: cover;
     object-position: 50% 50%;
-    box-shadow: 5px 5px 10px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
 }
