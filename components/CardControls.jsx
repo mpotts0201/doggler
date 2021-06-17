@@ -6,13 +6,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 export default function CardControls(props) {
     return (
         <div className={styles.container}>
-            <div className={styles.icon}>
+            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
                 <FontAwesomeIcon icon={faHeartBroken} color="red" size="2x" />
             </div>
-            <div className={styles.icon}>
+            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
                 <FontAwesomeIcon icon={faStar} color="lightblue" size="2x" />
             </div>
-            <div className={styles.icon}>
+            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
                 <FontAwesomeIcon icon={faBone} color="green" size="2x" />
             </div>
         </div>

@@ -2,49 +2,56 @@ import React, {useState, useEffect} from "react";
 import SwipeCard from "../components/SwipeCard";
 import Header from "../components/Header";
 import CardControls from "../components/CardControls";
-import axios from "axios";
 import styles from "../styles/Swipe.module.css";
+import {demo_dogs} from "../data"
 
 export default function Swipe() {
-    const [cards, setCards] = useState([]);
+    const [dogs, setDogs] = useState([]);
+    const [dog, setDog] = useState({});
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getPokemon = async () => {
-            try {
-                const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5");
-
-                setCards(res.data.results);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.log(error);
-            }
-        };
-
-        getPokemon();
+        setDogs(demo_dogs);
+        setLoading(false);
+        setDog(getRandomDog());
     }, []);
 
-    const swipeOff = (name) => {
-        const newCards = cards.filter((card) => card.name !== name);
-        setCards(newCards);
+    const swipeOff = (oldDog) => {
+        const newDog = getRandomDog(oldDog);
+
+        setDog(newDog);
     };
 
+    const getRandomDog = (name) => {
+        if (name) {
+            const newDogs = dogs.filter((dog) => dog.name !== name)
+            setDogs(newDogs)
+            return newDogs[Math.floor(Math.random() * newDogs.length)]
+        } else {
+            return demo_dogs[Math.floor(Math.random() * dogs.length)]
+        }
+    }
+
     const renderCards = () => {
-        return cards.map((card, i) => {
-            return <SwipeCard zIndex={cards.length - i} key={card.name} name={card.name} swipeOff={swipeOff} />;
-        });
+        const randomDog = dog;
+
+        return <SwipeCard
+            key={randomDog.name}
+            breed={randomDog.breed}
+            age={randomDog.age}
+            image={randomDog.images[0]}
+            name={randomDog.name} />;
     };
 
     if (loading) return <h1>Loading...</h1>;
 
-    if (!loading && cards.length === 0) return <h1>Out of swipes</h1>;
+    if (!loading && dogs.length === 0) return <h1>Out of swipes</h1>;
 
     return (
         <div className={styles.container}>
             <Header />
             {renderCards()}
-            <CardControls />
+            <CardControls name={dog.name} swipeOff={swipeOff}/>
         </div>
     );
 }
