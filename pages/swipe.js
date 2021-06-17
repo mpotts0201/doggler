@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import SwipeCard from "../components/SwipeCard";
+import Header from "../components/Header";
 import axios from "axios";
 
 export default function Swipe() {
@@ -29,7 +30,7 @@ export default function Swipe() {
 
     const renderCards = () => {
         return cards.map((card, i) => {
-            return <SwipeCard key={card.name} name={card.name} swipeOff={swipeOff} />;
+            return <SwipeCard zIndex={cards.length - i} key={card.name} name={card.name} swipeOff={swipeOff} />;
         });
     };
 
@@ -37,5 +38,11 @@ export default function Swipe() {
 
     if (!loading && cards.length === 0) return <h1>Out of swipes</h1>;
 
-    return <div>{renderCards()}</div>;
+    return (
+        <div>
+            <Header />
+            {renderCards()}
+            {/* controls */}
+        </div>
+    );
 }
