@@ -10,6 +10,7 @@ export default function Swipe() {
     // const [demo_dogs, setDemoDogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [dogs, setDogs] = useState([])
+    const [filteredDogList, setFilteredDogList] = useState([])
     const [dog, setDog] = useState({});
 
     useEffect(() => {
@@ -17,14 +18,22 @@ export default function Swipe() {
         axios.get(`http://localhost:3001/api/dogs`).then((data) => {
             console.log(data.data)
             setDogs(data.data)
+            setFilteredDogList(data.data)
         })
 
         // axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
         //     setDog(data.data)
         //     setLoading(false);
         // })
-        getRandomDog()
+        getDog()
     }, []);
+
+    const getDog = () => {
+        axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
+            setDog(data.data)
+            setLoading(false);
+        })
+    }
 
     const swipeOff = (oldDog) => {
         const newDog = getRandomDog(oldDog);
@@ -38,24 +47,24 @@ export default function Swipe() {
 
         axios.post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id}).then(() => {
             console.log(`Dog ${dog_id} added!`)
-            getRandomDog()
+            const newDog = getRandomDog(dog.name);
+            setDog(newDog)
+
         }).catch((err) => {
             console.log(err)
         })
     }
 
     const getRandomDog = (name) => {
-        // if (name) {
-        //     const newDogs = dogs.filter((dog) => dog.name !== name)
-        //     setDogs(newDogs)
-        //     return newDogs[Math.floor(Math.random() * newDogs.length)]
-        // } else {
-        //     return dogs[Math.floor(Math.random() * dogs.length)]
-        // }
-        axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
-            setDog(data.data)
-            setLoading(false);
-        })
+        if (name) {
+            const newDogs = dogs.filter((dog) => dog.name !== name)
+            console.log(newDogs.length)
+            setDogs(newDogs)
+            return newDogs[Math.floor(Math.random() * newDogs.length)]
+        } else {
+            return dogs[Math.floor(Math.random() * dogs.length)]
+        }
+        
     }
 
     const renderCards = () => {
