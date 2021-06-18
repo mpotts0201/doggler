@@ -5,4 +5,5 @@
     align-items: center;
     height: 10vh;
     padding: 0 20px;
+    z-index: 20;
 }

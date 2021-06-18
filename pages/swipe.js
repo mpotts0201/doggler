@@ -4,16 +4,25 @@ import Header from "../components/Header";
 import CardControls from "../components/CardControls";
 import styles from "../styles/Swipe.module.css";
 import {demo_dogs} from "../data"
+import axios from "axios";
 
 export default function Swipe() {
-    const [dogs, setDogs] = useState([]);
-    const [dog, setDog] = useState({});
+    // const [demo_dogs, setDemoDogs] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [dogs, setDogs] = useState([])
+    const [dog, setDog] = useState({});
 
     useEffect(() => {
-        setDogs(demo_dogs);
-        setLoading(false);
-        setDog(getRandomDog());
+        // setDemoDogs(demo_dogs);
+        axios.get(`http://localhost:3001/api/dogs`).then((data) => {
+            console.log(data.data)
+            setDogs(data.data)
+        })
+
+        axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
+            setDog(data.data)
+            setLoading(false);
+        })
     }, []);
 
     const swipeOff = (oldDog) => {
@@ -22,13 +31,24 @@ export default function Swipe() {
         setDog(newDog);
     };
 
+    const likeDog = () => {
+        const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
+        const dog_id = dog.id;
+
+        axios.post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id}).then(() => {
+            console.log(`Dog ${dog_id} added!`)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
     const getRandomDog = (name) => {
         if (name) {
             const newDogs = dogs.filter((dog) => dog.name !== name)
             setDogs(newDogs)
             return newDogs[Math.floor(Math.random() * newDogs.length)]
         } else {
-            return demo_dogs[Math.floor(Math.random() * dogs.length)]
+            return dogs[Math.floor(Math.random() * dogs.length)]
         }
     }
 
@@ -45,13 +65,13 @@ export default function Swipe() {
 
     if (loading) return <h1>Loading...</h1>;
 
-    if (!loading && dogs.length === 0) return <h1>Out of swipes</h1>;
+    if (!loading && !dog) return <h1>Out of swipes</h1>;
 
     return (
         <div className={styles.container}>
             <Header />
             {renderCards()}
-            <CardControls name={dog.name} swipeOff={swipeOff}/>
+            <CardControls name={dog.name} swipeOff={swipeOff} likeDog={likeDog}/>
         </div>
     );
 }

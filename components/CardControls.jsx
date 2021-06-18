@@ -12,7 +12,7 @@ export default function CardControls(props) {
             <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
                 <FontAwesomeIcon icon={faStar} color="lightblue" size="2x" />
             </div>
-            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
+            <div className={styles.icon} onClick={() => props.likeDog(props.name)}>
                 <FontAwesomeIcon icon={faBone} color="green" size="2x" />
             </div>
         </div>
