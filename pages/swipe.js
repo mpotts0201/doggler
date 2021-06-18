@@ -33,7 +33,7 @@ export default function Swipe() {
 
     const renderCards = () => {
         return cards.map((card, i) => {
-            return <SwipeCard zIndex={cards.length - i} key={card.name} name={card.name} swipeOff={swipeOff} />;
+            return <SwipeCard zIndex={cards.length - i} zIndex={cards.length - i} key={card.name} name={card.name} swipeOff={swipeOff} />;
         });
     };
 
@@ -42,8 +42,14 @@ export default function Swipe() {
     return (
         <div className={styles.container}>
             <Header />
-            {loading ? <Loader /> : renderCards()}
-            <CardControls />
+            {loading ? (
+                <Loader />
+            ) : (
+                <>
+                    {renderCards()}
+                    <CardControls />
+                </>
+            )}
         </div>
     );
 }

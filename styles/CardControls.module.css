@@ -5,9 +5,9 @@
     align-items: center;
     height: 10vh;
     width: 100vw;
-    padding: 0 20px;
-    position: absolute;
-    bottom: 50px;
+    padding: 0 20px 100px;
+    position: relative;
+    bottom: -150px;
 }
 
 .icon {
