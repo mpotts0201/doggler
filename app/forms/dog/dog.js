@@ -17,6 +17,10 @@ export default createForm(
             label: "Gender",
             yup: yup.string().required()
         },
+        breed: {
+            label: "Breed",
+            yup: yup.string().required()
+        },
         description: {
             label: "Description",
             yup: yup.string().required()
