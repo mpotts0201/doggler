@@ -27,7 +27,7 @@ export default function messages() {
     const unmatch = (dog_id) => {
         const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
         axios.delete(`http://localhost:3001/api/users/${user_id}/unmatch/${dog_id}`).then((data) => {
-            console.log(data)
+            setDogs(dogs.filter((dog) => dog.id !== dog_id))
         }).catch((err) => {
             console.log(err)
         })

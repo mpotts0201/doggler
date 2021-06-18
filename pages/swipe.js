@@ -19,10 +19,11 @@ export default function Swipe() {
             setDogs(data.data)
         })
 
-        axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
-            setDog(data.data)
-            setLoading(false);
-        })
+        // axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
+        //     setDog(data.data)
+        //     setLoading(false);
+        // })
+        getRandomDog()
     }, []);
 
     const swipeOff = (oldDog) => {
@@ -37,19 +38,24 @@ export default function Swipe() {
 
         axios.post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id}).then(() => {
             console.log(`Dog ${dog_id} added!`)
+            getRandomDog()
         }).catch((err) => {
             console.log(err)
         })
     }
 
     const getRandomDog = (name) => {
-        if (name) {
-            const newDogs = dogs.filter((dog) => dog.name !== name)
-            setDogs(newDogs)
-            return newDogs[Math.floor(Math.random() * newDogs.length)]
-        } else {
-            return dogs[Math.floor(Math.random() * dogs.length)]
-        }
+        // if (name) {
+        //     const newDogs = dogs.filter((dog) => dog.name !== name)
+        //     setDogs(newDogs)
+        //     return newDogs[Math.floor(Math.random() * newDogs.length)]
+        // } else {
+        //     return dogs[Math.floor(Math.random() * dogs.length)]
+        // }
+        axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
+            setDog(data.data)
+            setLoading(false);
+        })
     }
 
     const renderCards = () => {
