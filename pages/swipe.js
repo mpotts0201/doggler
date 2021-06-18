@@ -10,7 +10,6 @@ export default function Swipe() {
     // const [demo_dogs, setDemoDogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [dogs, setDogs] = useState([])
-    const [filteredDogList, setFilteredDogList] = useState([])
     const [dog, setDog] = useState({});
 
     useEffect(() => {
@@ -18,13 +17,8 @@ export default function Swipe() {
         axios.get(`http://localhost:3001/api/dogs`).then((data) => {
             console.log(data.data)
             setDogs(data.data)
-            setFilteredDogList(data.data)
         })
-
-        // axios.get(`http://localhost:3001/api/dogs/random`).then((data) => {
-        //     setDog(data.data)
-        //     setLoading(false);
-        // })
+        console.log(dogs)
         getDog()
     }, []);
 
