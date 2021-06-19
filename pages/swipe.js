@@ -11,19 +11,10 @@ export default function Swipe() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getPokemon = async () => {
-            try {
-                const res = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=5");
-
-                setCards(res.data.results);
-                setLoading(false);
-            } catch (error) {
-                setLoading(false);
-                console.log(error);
-            }
-        };
-
-        getPokemon();
+        setTimeout(() => {
+            setCards(data);
+            setLoading(false);
+        }, 2000);
     }, []);
 
     const swipeOff = (name) => {
@@ -33,7 +24,7 @@ export default function Swipe() {
 
     const renderCards = () => {
         return cards.map((card, i) => {
-            return <SwipeCard zIndex={cards.length - i} zIndex={cards.length - i} key={card.name} name={card.name} swipeOff={swipeOff} />;
+            return <SwipeCard key={i} card={card} swipeOff={swipeOff} />;
         });
     };
 
@@ -53,3 +44,11 @@ export default function Swipe() {
         </div>
     );
 }
+
+const data = [
+    {name: "Baxter", url: "https://s3.amazonaws.com/cdn-origin-etr.akc.org/wp-content/uploads/2018/01/12201051/cute-puppy-body-image.jpg", description: "Loves sandwiches"},
+    {name: "Eddy", url: "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/other/dog_cool_summer_slideshow/1800x1200_dog_cool_summer_other.jpg?resize=750px:*", description: "Has a humping problem"},
+    {name: "Phil", url: "https://www.tampabay.com/resizer/tAqq_86KOmKgluEgpI6xaV_Csvo=/1600x900/smart/arc-anglerfish-arc2-prod-tbt.s3.amazonaws.com/public/4BPHOOWHJAI6TBKNIBWI6S7HAY.jpg", description: "He lost his favorite toy"},
+    {name: "Stacy", url: "https://www.riverviewanimalhospital.ca/wp-content/uploads/sites/7/2018/10/weed-dog.jpg", description: "Always happy to meet people"},
+    {name: "Fang", url: "http://www.mypet.com/img/basic-pet-care/Breeds-of-Dogs-That-Need-The-Most-Exercise.jpg", description: "Small and friendly"}
+];
