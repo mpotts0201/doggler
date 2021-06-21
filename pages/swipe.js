@@ -33,7 +33,7 @@ export default function Swipe() {
 
         if (liked) {
             axios
-                .post(`http://localhost:3001/api/users/${user_id}/favorites`, {id})
+                .post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id: id})
                 .then(() => {
                     console.log(`Dog ${id} added!`);
                 })
