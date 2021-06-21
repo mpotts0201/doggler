@@ -15,7 +15,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    top: calc(30vh - 250px);
+    /* top: calc(30vh - 225px); */
+    top: 0vh;
     left: calc(50vw - 175px);
 }
 
@@ -28,11 +29,12 @@
 
 .textblock {
     position: relative;
-    top: 500px;
+    top: 65vh;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.6) 40%);
-    width: 350px;
+    max-width: 350px;
+    width: 100vw;
 }
 
 .name {
@@ -50,8 +52,10 @@
 }
 
 .image {
-    width: 350px;
-    height: 500px;
+    max-width: 350px;
+    width: 100vw;
+    max-height: 65vh;
+    height: 65vh;
     border-radius: 15px;
     object-fit: cover;
     object-position: 50% 50%;

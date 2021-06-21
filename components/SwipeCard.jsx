@@ -29,9 +29,9 @@ export default function SwipeCard(props) {
             }, 500);
         }
 
-        if (dir === 1) {
+        if (dir === 1 && mx > 0) {
             setIcon(faBone);
-        } else {
+        } else if (dir === -1 && mx < 0) {
             setIcon(faHeartBroken);
         }
 
