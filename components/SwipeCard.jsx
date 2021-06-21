@@ -1,7 +1,9 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styles from "../styles/SwipeCard.module.css";
 import {animated, useSpring} from "react-spring";
 import {useDrag} from "@use-gesture/react";
+import {faBone, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function SwipeCard(props) {
     const swipeOffTimeout = setTimeout;
@@ -10,10 +12,13 @@ export default function SwipeCard(props) {
         return () => clearTimeout(swipeOffTimeout);
     });
 
-    const {card, swipeOff} = props;
-    const [{x, rotateZ, scale}, api] = useSpring(() => ({x: 0, rotateZ: 0, scale: 1}));
+    const [icon, setIcon] = useState(faBone);
 
-    const bind = useDrag(({down, movement: [mx], velocity, direction: [xDir]}) => {
+    const {card, swipeOff} = props;
+    const [{x, rotateZ, scale: cardScale}, cardApi] = useSpring(() => ({x: 0, rotateZ: 0, scale: 1}));
+    const [{y, opacity, scale: iconScale}, iconApi] = useSpring(() => ({y: 0, scale: 0.5, opacity: 0}));
+
+    const bindCard = useDrag(({down, movement: [mx], velocity, direction: [xDir]}) => {
         let deltaX = 0;
         const dir = xDir > 0 ? 1 : -1;
         const rotation = mx / 100;
@@ -24,18 +29,30 @@ export default function SwipeCard(props) {
             }, 500);
         }
 
-        api.start({x: down ? mx : deltaX, rotateZ: down ? rotation : 0, scale: down ? 1.1 : 1});
+        if (dir === 1) {
+            setIcon(faBone);
+        } else {
+            setIcon(faHeartBroken);
+        }
+
+        cardApi.start({x: down ? mx : deltaX, rotateZ: down ? rotation : 0, scale: down ? 1.1 : 1});
+        iconApi.start({y: down ? -Math.abs(mx / 2) : -deltaX, opacity: down ? Math.abs(mx / (window.innerWidth / 2)) : 0, scale: down ? 1.5 : 1});
     });
 
     return (
-        <animated.div {...bind()} style={{x, touchAction: "none", rotateZ, scale}} className={styles.card}>
-            <div className={styles.info}>
-                <div className={styles.textblock}>
-                    <h1 className={styles.name}>{card.name}</h1>
-                    <h3 className={styles.description}>{card.description}</h3>
+        <>
+            <animated.div {...bindCard()} style={{x, touchAction: "none", rotateZ, scale: cardScale}} className={styles.card}>
+                <div className={styles.info}>
+                    <div className={styles.textblock}>
+                        <h1 className={styles.name}>{card.name}</h1>
+                        <h3 className={styles.description}>{card.description}</h3>
+                    </div>
+                    <img draggable={false} src={card.url} alt="good boi" className={styles.image} />
                 </div>
-                <img draggable={false} src={card.url} alt="good boi" className={styles.image} />
-            </div>
-        </animated.div>
+            </animated.div>
+            <animated.div style={{y, touchAction: "none", scale: iconScale, opacity}} className={styles.icon}>
+                <FontAwesomeIcon color={icon === faBone ? "green" : "red"} icon={icon} size="4x" />
+            </animated.div>
+        </>
     );
 }

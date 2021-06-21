@@ -57,3 +57,17 @@
     object-position: 50% 50%;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
 }
+
+.icon {
+    position: fixed;
+    background-color: #fff;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    width: 150px;
+    height: 150px;
+    border-radius: 150px;
+    bottom: 30vh;
+    left: calc(50vw - 75px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
