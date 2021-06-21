@@ -4,7 +4,7 @@ import styles from "../styles/Messages.module.css";
 import Header from '../components/Header';
 
 export default function messages() {
-    const userId = "CD251923-6A29-4CFE-94EA-A2C4B044E0C4"
+    const userId = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4"
 
     const [dogs, setDogs] = useState([]);
 

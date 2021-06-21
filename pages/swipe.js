@@ -5,8 +5,14 @@ import CardControls from "../components/CardControls";
 import Loader from "../components/Loader";
 import axios from "axios";
 import styles from "../styles/Swipe.module.css";
+import {withRouter} from 'next/router';
 
-export default function Swipe() {
+Swipe.getInitialProps = ({query: {user_id}}) => {
+    console.log(user_id)
+    return {user_id}
+}
+
+function Swipe({user_id}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [dogs, setDogs] = useState([]);
@@ -14,7 +20,7 @@ export default function Swipe() {
     useEffect(() => {
         const getDogs = async () => {
             try {
-                const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
+                // const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
                 const res = await axios.get(`http://localhost:3001/api/users/${user_id}/dogs/getUserEligibleDogs`);
                 // const res = await axios.get(`http://localhost:3001/api/dogs`);
                 console.log(res.data);
@@ -30,7 +36,7 @@ export default function Swipe() {
     }, []);
 
     const swipeOff = (dog, liked = false) => {
-        const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
+        // const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
         const {id} = dog;
 
         if (liked) {
@@ -49,6 +55,7 @@ export default function Swipe() {
     };
 
     const renderCards = () => {
+        console.log(user_id)
         console.log("2 DOGS: ", dogs.slice(0, 2), dogs);
         return dogs
             .slice(0, 2)
@@ -70,11 +77,13 @@ export default function Swipe() {
             {loading ? (
                 <Loader />
             ) : (
-                <>
-                    {renderCards()}
-                    <CardControls dog={dogs[0]} swipeOff={swipeOff} />
-                </>
-            )}
+                    <>
+                        {renderCards()}
+                        <CardControls dog={dogs[0]} swipeOff={swipeOff} />
+                    </>
+                )}
         </div>
     );
 }
+
+export default withRouter(Swipe)
