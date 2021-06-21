@@ -5,21 +5,22 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {motion} from "framer-motion";
 
 export default function CardControls(props) {
+    const {dog} = props;
     const buttons = [
         {
             icon: faHeartBroken,
             color: "red",
-            onClick: () => props.swipeOff(props.name)
+            onClick: () => props.swipeOff(dog)
         },
         {
             icon: faStar,
             color: "lightblue",
-            onClick: () => props.swipeOff(props.name)
+            onClick: () => props.swipeOff(dog)
         },
         {
             icon: faBone,
             color: "green",
-            onClick: () => props.likeDog(props.name)
+            onClick: () => props.swipeOff(dog, true)
         }
     ];
     return (
