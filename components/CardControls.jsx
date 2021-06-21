@@ -2,19 +2,43 @@ import React from "react";
 import styles from "../styles/CardControls.module.css";
 import {faBone, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {motion} from "framer-motion";
 
 export default function CardControls(props) {
+    const buttons = [
+        {
+            icon: faHeartBroken,
+            color: "red",
+            onClick: () => props.swipeOff(props.name)
+        },
+        {
+            icon: faStar,
+            color: "lightblue",
+            onClick: () => props.swipeOff(props.name)
+        },
+        {
+            icon: faBone,
+            color: "green",
+            onClick: () => props.likeDog(props.name)
+        }
+    ];
     return (
         <div className={styles.container}>
-            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
-                <FontAwesomeIcon icon={faHeartBroken} color="red" size="2x" />
-            </div>
-            <div className={styles.icon} onClick={() => props.swipeOff(props.name)}>
-                <FontAwesomeIcon icon={faStar} color="lightblue" size="2x" />
-            </div>
-            <div className={styles.icon} onClick={() => props.likeDog(props.name)}>
-                <FontAwesomeIcon icon={faBone} color="green" size="2x" />
-            </div>
+            {buttons.map(({color, icon, onClick}, i) => {
+                return <ControlButton onClick={onClick} key={i} color={color} icon={icon} />;
+            })}
         </div>
     );
 }
+
+const ControlButton = ({color, icon, onClick}) => {
+    const animConfig = {
+        scale: [1, 1.4, 1.2],
+        transition: {duration: 0.2}
+    };
+    return (
+        <motion.div onClick={onClick} whileHover={animConfig} whileTap={animConfig} className={styles.icon}>
+            <FontAwesomeIcon icon={icon} color={color} size="2x" />
+        </motion.div>
+    );
+};

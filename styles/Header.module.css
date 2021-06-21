@@ -3,7 +3,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 10vh;
     padding: 0 20px;
     z-index: 20;
+    position: fixed;
+    width: 100vw;
+    height: 10vh;
+    top: 0vh;
 }

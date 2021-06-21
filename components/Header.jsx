@@ -25,6 +25,3 @@ export default function Header(props) {
         </div>
     );
 }
-
-// #DA3472
-// #E05C5B
