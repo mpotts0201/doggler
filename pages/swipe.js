@@ -14,7 +14,9 @@ export default function Swipe() {
     useEffect(() => {
         const getDogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:3001/api/dogs`);
+                const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
+                const res = await axios.get(`http://localhost:3001/api/users/${user_id}/dogs/getUserEligibleDogs`);
+                // const res = await axios.get(`http://localhost:3001/api/dogs`);
                 console.log(res.data);
                 setDogs(res.data);
                 setLoading(false);
