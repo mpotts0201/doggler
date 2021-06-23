@@ -15,7 +15,7 @@ export default function Header(props) {
                     <FontAwesomeIcon icon={faDog} size="lg" color="grey" />
                 </div>
             </Link>
-            <Link href="/swipe">
+            <Link href={{pathname: "/swipe", query: {user_id: router.query.user_id}}}>
                 <div>
                     <FontAwesomeIcon icon={faPaw} size="lg" color="#DA3472" />
                 </div>
