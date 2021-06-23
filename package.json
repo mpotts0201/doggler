@@ -14,13 +14,18 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@use-gesture/react": "^10.0.0-beta.12",
     "axios": "^0.21.1",
+    "babel-plugin-module-resolver": "^4.1.0",
     "formik": "^2.2.9",
     "framer-motion": "^4.1.17",
     "next": "10.2.3",
     "next-images": "^1.8.1",
+    "next-redux-wrapper": "^7.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-spring": "^9.2.3",
+    "redux-easy-actions": "^0.4.0",
+    "redux-thunk": "^2.3.0",
+    "seamless-immutable": "^7.1.4",
     "yup": "^0.32.9"
   }
 }
