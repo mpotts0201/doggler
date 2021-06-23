@@ -3,6 +3,7 @@ import axios from 'axios';
 import styles from "../styles/Messages.module.css";
 import Header from '../components/Header';
 import {withRouter} from 'next/router';
+import Layout from "../components/Layout";
 
 messages.getInitialProps = ({query: {user_id}}) => {
     return {user_id}
@@ -36,8 +37,7 @@ function messages({user_id}) {
     }
 
     return (
-        <div>
-            <Header />
+        <Layout>
             <h1 className={styles.header}>Messages</h1>
             <div className={styles["messages-container"]}>
                 {dogs.map((dog) => (
@@ -50,7 +50,7 @@ function messages({user_id}) {
                     </div>
                 ))}
             </div>
-        </div>
+        </Layout>
     )
 }
 

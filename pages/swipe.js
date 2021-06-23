@@ -61,7 +61,7 @@ function Swipe({user_id}) {
             .slice(0, 2)
             .reverse()
             .map((dog) => {
-                return <SwipeCard key={dog.id} dog={dog} swipeOff={swipeOff} />;
+                return <SwipeCard key={dog.id} user_id={user_id} dog={dog} swipeOff={swipeOff} />;
             });
     };
 
@@ -73,7 +73,7 @@ function Swipe({user_id}) {
 
     return (
         <div className={styles.container}>
-            <Header />
+            <Header swipe={true}/>
             {loading ? (
                 <Loader />
             ) : (

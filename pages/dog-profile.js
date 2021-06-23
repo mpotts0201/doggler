@@ -5,30 +5,30 @@ import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 
-profile.getInitialProps = ({query: {user_id}}) => {
-    console.log(user_id)
-    return {user_id}
+dogProfile.getInitialProps = ({query: {dog_id}}) => {
+    console.log(dog_id)
+    return {dog_id}
 }
 
-function profile({user_id}) {
+function dogProfile({dog_id}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [user, setUser] = useState({});
+    const [dog, setDog] = useState({});
 
     useEffect(() => {
-        const getUser = async () => {
+        const getDog = async () => {
             try {
-                const res = await axios.get(`http://localhost:3001/api/users/${user_id}`);
+                const res = await axios.get(`http://localhost:3001/api/dogs/${dog_id}`);
                 console.log(res.data);
-                setUser(res.data[0]);
+                setDog(res.data);
                 setLoading(false);
             } catch (error) {
-                setError("Failed to get Dogs");
+                setError("Failed to get Dog");
                 setLoading(false);
                 throw error;
             }
         };
-        getUser();
+        getDog();
     }, []);
 
     return <Layout>
@@ -36,22 +36,23 @@ function profile({user_id}) {
             <div className={styles["profile-container"]}>
                 <div className={styles["headline-content"]}>
                     <div className={styles.left}>
-                        <img className={styles.image} src={user.image} alt={user.name} />
+                        {console.log(dog.images)}
+                        {dog.images && <img className={styles.image} src={dog.images[0]} alt={dog.name} />}
                         <div className={styles.name}>
-                            <div>{user.name}</div>
-                            <div>{user.location}</div>
-                            <div>{user.gender} - {user.age}</div>
+                            <div>{dog.name}</div>
+                            <div>{dog.breed}</div>
+                            <div>{dog.gender} - {dog.age}</div>
                         </div>
                     </div>
                     {/* <div className={styles.right}></div> */}
                 </div>
 
                 <div className={styles["profile-content"]}>
-                    <div>{user.description}</div>
+                    <div>{dog.description}</div>
                 </div>
             </div>
         </div>
     </Layout>;
 }
 
-export default withRouter(profile)
+export default withRouter(dogProfile)

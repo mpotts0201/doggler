@@ -1,0 +1,34 @@
+.profile-container {
+    width: 100%;
+    padding: 20px;
+}
+
+.headline-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.right {
+    width: 50%;
+    height: auto;
+}
+
+.image {
+    width: 30vw;
+    height: 30vw;
+    border-radius: 50%;
+}
+
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+

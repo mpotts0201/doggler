@@ -1,5 +1,6 @@
 import Head from "next/head";
 import React from "react";
+import Header from "./Header";
 import Navbar from "./Navbar";
 
 export default function Layout({children}) {
@@ -12,7 +13,8 @@ export default function Layout({children}) {
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" />
             </Head>
 
-            <Navbar />
+            {/* <Navbar /> */}
+            <Header swipe={false}/>
 
             <div className="container pt-5 pb-5">{children}</div>
         </React.Fragment>

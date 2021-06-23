@@ -4,10 +4,12 @@ import {animated, useSpring} from "react-spring";
 import {useDrag} from "@use-gesture/react";
 import {faBone, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import Link from "next/link";
+import {useRouter} from "next/router";
 
 export default function SwipeCard(props) {
     const {dog} = props;
-
+    const router = useRouter()
     const swipeOffTimeout = setTimeout;
 
     useEffect(() => {
@@ -46,10 +48,15 @@ export default function SwipeCard(props) {
             <animated.div {...bindCard()} style={{x, touchAction: "none", rotateZ, scale: cardScale}} className={styles.card}>
                 <div className={styles.info}>
                     <div className={styles.textblock}>
-                        <h1 className={styles.name}>{dog.name}</h1>
-                        <h3 className={styles.description}>
-                            {dog.breed} | {dog.age}
-                        </h3>
+                        {console.log('DOG ID: ', dog.id)}
+                        <Link href={{pathname: "/dog-profile", query: {dog_id: dog.id, user_id: props.user_id}}}>
+                            <div>
+                                <h1 className={styles.name}>{dog.name}</h1>
+                                <h3 className={styles.description}>
+                                    {dog.breed} | {dog.age}
+                                </h3>
+                            </div>
+                        </Link>
                     </div>
                     <img draggable={false} src={dog.images[0]} alt="good boi" className={styles.image} />
                 </div>
