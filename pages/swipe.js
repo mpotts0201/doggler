@@ -6,6 +6,7 @@ import Loader from "../components/Loader";
 import axios from "axios";
 import styles from "../styles/Swipe.module.css";
 import {withRouter} from 'next/router';
+import {demo_dogs} from "../data";
 
 Swipe.getInitialProps = ({query: {user_id}}) => {
     console.log(user_id)
@@ -22,7 +23,6 @@ function Swipe({user_id}) {
             try {
                 // const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
                 const res = await axios.get(`http://localhost:3001/api/users/${user_id}/dogs/getUserEligibleDogs`);
-                // const res = await axios.get(`http://localhost:3001/api/dogs`);
                 console.log(res.data);
                 setDogs(res.data);
                 setLoading(false);
@@ -32,6 +32,7 @@ function Swipe({user_id}) {
                 throw error;
             }
         };
+
         getDogs();
     }, []);
 
@@ -40,14 +41,14 @@ function Swipe({user_id}) {
         const {id} = dog;
 
         if (liked) {
-            axios
-                .post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id: id})
-                .then(() => {
-                    console.log(`Dog ${id} added!`);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            // axios
+            //     .post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id: id})
+            //     .then(() => {
+            //         console.log(`Dog ${id} added!`);
+            //     })
+            //     .catch((err) => {
+            //         console.log(err);
+            //     });
         }
 
         const filteredDogs = dogs.filter((dog) => dog.id !== id);
