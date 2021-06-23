@@ -1,25 +1,38 @@
 import React, {useState} from "react";
 import Layout from "../components/Layout";
+import axios from "axios";
+import Router from 'next/router'
 
 export default function register() {
     const [state, setState] = useState({
         name: "",
         email: "",
-        password: "",
+        encrypted_password: "",
         error: "",
-        success: "",
-        buttonText: "Register"
+        success: ""
     });
 
-    const {name, email, password, error, succes, buttonText} = state;
+    const {name, email, encrypted_password, error, succes} = state;
 
     const handleChange = (name) => (e) => {
-        setState({...state, [name]: e.target.value, error: "", success: "", buttonText: "Register"});
+        setState({...state, [name]: e.target.value, error: "", success: ""});
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.table(state);
+        const body = {
+            name: state.name,
+            email: state.email,
+            encrypted_password: state.encrypted_password
+        }
+        axios.post("http://localhost:3001/api/users", body).then((res) => {
+            console.log(res.data)
+            Router.push({pathname: '/swipe', query: {user_id: res.data[0].id}})
+        }).catch((err) => {
+            console.log(err)
+            setState({error: 'Invalid email or password'})
+        })
     };
 
     const registerForm = () => (
@@ -37,13 +50,13 @@ export default function register() {
                 </div>
             </div>
             <div className="field">
-                <label className="label">Password</label>
+                <label className="label">encrypted_password</label>
                 <div className="control">
-                    <input onChange={handleChange("password")} className="input" type="password" value={password} placeholder="Type Your Password" />
+                    <input onChange={handleChange("encrypted_password")} className="input" type="encrypted_password" value={encrypted_password} placeholder="Type Your Password" />
                 </div>
             </div>
             <div className="control">
-                <button className="button is-link">{buttonText}</button>
+                <button className="button is-link">{"Register"}</button>
             </div>
         </form>
     );
@@ -54,8 +67,6 @@ export default function register() {
                 <h1>Register</h1>
                 <br />
                 {registerForm()}
-                {/* <hr /> */}
-                {/* {JSON.stringify(state)} */}
             </div>
         </Layout>
     );

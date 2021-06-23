@@ -2,10 +2,13 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios';
 import styles from "../styles/Messages.module.css";
 import Header from '../components/Header';
+import {withRouter} from 'next/router';
 
-export default function messages() {
-    const userId = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4"
+messages.getInitialProps = ({query: {user_id}}) => {
+    return {user_id}
+}
 
+function messages({user_id}) {
     const [dogs, setDogs] = useState([]);
 
     useEffect(() => {
@@ -13,7 +16,7 @@ export default function messages() {
     }, []);
 
     const getFavorites = () => {
-        axios.get(`http://localhost:3001/api/users/${userId}/favorites`).then((data) => {
+        axios.get(`http://localhost:3001/api/users/${user_id}/favorites`).then((data) => {
             data.data.map((dog) => {
                 axios.get(`http://localhost:3001/api/dogs/${dog.dog_id}`).then((data) => {
                     setDogs((dogs) => [...dogs, data.data])
@@ -25,7 +28,6 @@ export default function messages() {
     }
 
     const unmatch = (dog_id) => {
-        const user_id = "cd251923-6a29-4cfe-94ea-a2c4b044e0c4";
         axios.delete(`http://localhost:3001/api/users/${user_id}/unmatch/${dog_id}`).then((data) => {
             setDogs(dogs.filter((dog) => dog.id !== dog_id))
         }).catch((err) => {
@@ -51,3 +53,5 @@ export default function messages() {
         </div>
     )
 }
+
+export default withRouter(messages)
