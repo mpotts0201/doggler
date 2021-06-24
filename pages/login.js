@@ -1,7 +1,8 @@
 import React, {useState} from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import Router from 'next/router'
+import Router from "next/router";
+import LoginUserForm from "../app/forms/user_login/LoginUserForm";
 
 export default function login() {
     const [state, setState] = useState({
@@ -21,12 +22,15 @@ export default function login() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password}).then((data) => {
-            Router.push({pathname: '/swipe', query: {user_id: data.data[0].id}})
-        }).catch((err) => {
-            console.log(err)
-            setState({error: 'Invalid email or password'})
-        })
+        axios
+            .post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password})
+            .then((data) => {
+                Router.push({pathname: "/swipe", query: {user_id: data.data[0].id}});
+            })
+            .catch((err) => {
+                console.log(err);
+                setState({error: "Invalid email or password"});
+            });
     };
 
     const loginForm = () => (
@@ -54,7 +58,8 @@ export default function login() {
             <div className="column is-three-fifths is-offset-one-fifth">
                 <h1>Login</h1>
                 <br />
-                {loginForm()}
+                {/* {loginForm()} */}
+                <LoginUserForm />
                 {state.error && <div style={{color: "red"}}>{state.error}</div>}
             </div>
         </Layout>

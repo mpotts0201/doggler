@@ -5,7 +5,7 @@ export default createForm(
     {
         email: {
             label: "Email",
-            yup: yup.email().required()
+            yup: yup.string().required()
         },
         password: {
             label: "Password",
