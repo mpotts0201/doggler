@@ -17,12 +17,8 @@ function messages({user_id}) {
     }, []);
 
     const getFavorites = () => {
-        axios.get(`http://localhost:3001/api/users/${user_id}/favorites`).then((data) => {
-            data.data.map((dog) => {
-                axios.get(`http://localhost:3001/api/dogs/${dog.dog_id}`).then((data) => {
-                    setDogs((dogs) => [...dogs, data.data])
-                })
-            })
+        axios.get(`http://localhost:3001/api/users/${user_id}/favorites`).then((res) => {
+            setDogs(res.data)
         }).catch((err) => {
             console.log(err)
         });
