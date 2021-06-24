@@ -4,6 +4,7 @@ import styles from "../styles/Messages.module.css";
 import Header from '../components/Header';
 import {withRouter} from 'next/router';
 import Layout from "../components/Layout";
+import Link from "next/link";
 
 messages.getInitialProps = ({query: {user_id}}) => {
     return {user_id}
@@ -37,13 +38,15 @@ function messages({user_id}) {
             <h1 className={styles.header}>Messages</h1>
             <div className={styles["messages-container"]}>
                 {dogs.map((dog) => (
-                    <div className={styles["message-row"]} key={dog.id}>
-                        <div className={styles["message-row-left"]}>
-                            <img className={styles["message-image"]} src={dog.images[0]} alt={dog.name} />
-                            <div className={styles["message-name"]}>{dog.name}</div>
+                    <Link key={dog.id} href={{pathname: "/dog-profile", query: {dog_id: dog.id}}}>
+                        <div className={styles["message-row"]}>
+                            <div className={styles["message-row-left"]}>
+                                <img className={styles["message-image"]} src={dog.images[0]} alt={dog.name} />
+                                <div className={styles["message-name"]}>{dog.name}</div>
+                            </div>
+                            <div onClick={() => unmatch(dog.id)} className={styles.unmatch}>Unmatch</div>
                         </div>
-                        <div onClick={() => unmatch(dog.id)} className={styles.unmatch}>Unmatch</div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </Layout>
