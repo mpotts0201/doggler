@@ -17,16 +17,24 @@ export default createForm(
             label: "Gender",
             yup: yup.string().required()
         },
-        description: {
-            label: "Description",
+        image_src: {
+            label: "Image Source",
             yup: yup.string().required()
         },
         email: {
             label: "Email",
             yup: yup.email().required()
         },
-        image_src: {
-            label: "Image Source",
+        password: {
+            label: "Password",
+            yup: yup.string().required()
+        },
+        description: {
+            label: "Description",
+            yup: yup.string().required()
+        },
+        location: {
+            label: "Location",
             yup: yup.string().required()
         }
     },

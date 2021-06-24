@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import Layout from "../components/Layout";
 import axios from "axios";
-import Router from 'next/router'
+import Router from "next/router";
 
 export default function register() {
     const [state, setState] = useState({
@@ -25,14 +25,17 @@ export default function register() {
             name: state.name,
             email: state.email,
             encrypted_password: state.encrypted_password
-        }
-        axios.post("http://localhost:3001/api/users", body).then((res) => {
-            console.log(res.data)
-            Router.push({pathname: '/swipe', query: {user_id: res.data[0].id}})
-        }).catch((err) => {
-            console.log(err)
-            setState({error: 'Invalid email or password'})
-        })
+        };
+        axios
+            .post("http://localhost:3001/api/users", body)
+            .then((res) => {
+                console.log(res.data);
+                Router.push({pathname: "/swipe", query: {user_id: res.data[0].id}});
+            })
+            .catch((err) => {
+                console.log(err);
+                setState({error: "Invalid email or password"});
+            });
     };
 
     const registerForm = () => (
