@@ -1,8 +1,6 @@
-import SiteLayout from "components/SiteLayout";
 import React, {Component} from "react";
 import Controller from "./controller";
 import {connect} from "react-redux";
-import Login from "components/Login";
 
 class Router extends Component {
     constructor(props) {
@@ -10,14 +8,14 @@ class Router extends Component {
         this.controller = new Controller(props);
     }
 
-    componentDidMount() {
-        const {logged_in} = this.props;
-        if (!logged_in) {
-            this.controller.navigateToPage("/");
-        } else {
-            this.controller.navigateToPage("dashboard");
-        }
-    }
+    // componentDidMount() {
+    //     const {logged_in} = this.props;
+    //     if (!logged_in) {
+    //         this.controller.navigateToPage("/");
+    //     } else {
+    //         this.controller.navigateToPage("swipe");
+    //     }
+    // }
 
     render() {
         const {Component, logged_in} = this.props;
@@ -27,12 +25,10 @@ class Router extends Component {
             controller: this.controller
         };
 
-        if (!logged_in) return <Login {...component_props} />;
+        // if (!logged_in) return <Login {...component_props} />;
 
         return (
-            <SiteLayout {...component_props}>
                 <Component {...component_props} />
-            </SiteLayout>
         );
     }
 }

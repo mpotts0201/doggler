@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector} from 'react-redux'
 import SwipeCard from "../components/SwipeCard";
+import InactiveCard from "../components/InactiveCard";
 import Header from "../components/Header";
 import CardControls from "../components/CardControls";
 import Loader from "../components/Loader";
@@ -64,7 +65,7 @@ function Swipe(props) {
     const renderCards = () => {
         return (
             <>
-                <SwipeCard key={dogs[1].id} dog={dogs[1]} swipeOff={swipeOff} />
+                <InactiveCard key={dogs[1].id} dog={dogs[1]} />
                 <SwipeCard key={dogs[0].id} dog={dogs[0]} swipeOff={swipeOff} />
             </>
         )
