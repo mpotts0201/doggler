@@ -22,7 +22,7 @@ export default function login() {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password}).then((data) => {
-            Router.push({pathname: '/swipe', query: {user_id: data.data[0].id}})
+            Router.push({pathname: '/swipe', query: {user_id: data.data.id}})
         }).catch((err) => {
             console.log(err)
             setState({error: 'Invalid email or password'})
