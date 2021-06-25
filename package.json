@@ -1,26 +1,32 @@
 {
-  "name": "doggler-front-end",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.35",
-    "@fortawesome/free-brands-svg-icons": "^5.15.3",
-    "@fortawesome/free-solid-svg-icons": "^5.15.3",
-    "@fortawesome/react-fontawesome": "^0.1.14",
-    "@use-gesture/react": "^10.0.0-beta.12",
-    "axios": "^0.21.1",
-    "formik": "^2.2.9",
-    "framer-motion": "^4.1.17",
-    "next": "10.2.3",
-    "next-images": "^1.8.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-spring": "^9.2.3",
-    "yup": "^0.32.9"
-  }
+    "name": "doggler-front-end",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+    },
+    "dependencies": {
+        "@fortawesome/fontawesome-svg-core": "^1.2.35",
+        "@fortawesome/free-brands-svg-icons": "^5.15.3",
+        "@fortawesome/free-solid-svg-icons": "^5.15.3",
+        "@fortawesome/react-fontawesome": "^0.1.14",
+        "@use-gesture/react": "^10.0.0-beta.12",
+        "axios": "^0.21.1",
+        "formik": "^2.2.9",
+        "framer-motion": "^4.1.17",
+        "lodash": "^4.17.21",
+        "next": "10.2.3",
+        "next-images": "^1.8.1",
+        "numeral": "^2.0.6",
+        "randomstring": "^1.2.1",
+        "react": "17.0.2",
+        "react-dom": "17.0.2",
+        "react-spring": "^9.2.3",
+        "yup": "^0.32.9"
+    },
+    "devDependencies": {
+        "@next/bundle-analyzer": "^10.2.0"
+    }
 }
