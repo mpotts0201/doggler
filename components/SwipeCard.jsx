@@ -45,9 +45,6 @@ export default function SwipeCard(props) {
 
     const navigateToProfile = () => {
         const {controller} = props;
-        console.log(props)
-        console.log(dog.id)
-
         controller.navigateToPage('dog-profile', 'dogId', dog.id)
     }
 
@@ -56,7 +53,6 @@ export default function SwipeCard(props) {
             <animated.div {...bindCard()} style={{x, touchAction: "none", rotateZ, scale: cardScale}} className={styles.card}>
                 <div className={styles.info}>
                     <div className={styles.textblock}>
-                        {console.log('DOG ID: ', dog.id)}
                             <div onClick={navigateToProfile}>
                                 <h1 className={styles.name}>{dog.name}</h1>
                                 <h3 className={styles.description}>
