@@ -16,17 +16,16 @@ const {DogActions} = actions
 
 function Swipe(props) {
 
-    const {dispatch} = props
+    const {userId, dispatch} = props
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const dogs = useSelector(state => state.app.dogs.dogs)
-    const user_id = useSelector(state => state.app.router.params.userId)
 
     useEffect(() => {
         const getDogs = async () => {
             try {
-                const res = await axios.get(`http://localhost:3001/api/users/${user_id}/dogs/getUserEligibleDogs`);
+                const res = await axios.get(`http://localhost:3001/api/users/${userId}/dogs/getUserEligibleDogs`);
                 dispatch(DogActions.SET_DOG_DATA(res.data))
                 setLoading(false);
             } catch (error) {
@@ -44,7 +43,7 @@ function Swipe(props) {
 
         if (liked) {
             axios
-                .post(`http://localhost:3001/api/users/${user_id}/favorites`, {dog_id: id})
+                .post(`http://localhost:3001/api/users/${userId}/favorites`, {dog_id: id})
                 .then(() => {
                     console.log(`Dog ${id} added!`);
                 })

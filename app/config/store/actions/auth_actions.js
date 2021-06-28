@@ -14,5 +14,8 @@ export default EasyActions({
     // used in compare
     SET_LOGGED_IN(type, value) {
         return {type, value};
+    },
+    SET_USER_ID(type, value) {
+        return {type, value}
     }
 });

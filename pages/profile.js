@@ -5,12 +5,7 @@ import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 
-profile.getInitialProps = ({query: {user_id}}) => {
-    console.log(user_id)
-    return {user_id}
-}
-
-function profile({user_id}) {
+function profile({userId}) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState({});
@@ -18,7 +13,7 @@ function profile({user_id}) {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const res = await axios.get(`http://localhost:3001/api/users/${user_id}`);
+                const res = await axios.get(`http://localhost:3001/api/users/${userId}`);
                 console.log(res.data);
                 setUser(res.data[0]);
                 setLoading(false);

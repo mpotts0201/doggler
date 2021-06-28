@@ -4,7 +4,7 @@ import createForm from "./user_login";
 import axios from "axios";
 import Router from "next/router";
 import actions from "app/config/store/actions"
-const {DogActions} = actions
+const {AuthActions} = actions
 export default class LoginUserForm extends Component {
     constructor(props) {
         super(props);
@@ -19,13 +19,14 @@ export default class LoginUserForm extends Component {
 
     handleSubmit = (values, actions) => {
         // e.preventDefault();
-        const {controller} = this.props;
+        const {controller, dispatch} = this.props;
         console.log(controller)
 
         axios
             .post("http://localhost:3001/api/users/login", {email: values.email, encrypted_password: values.password})
             .then((res) => {
-                controller.navigateToPage('swipe', 'userId', res.data.id)
+                dispatch(AuthActions.SET_USER_ID(res.data.id))
+                controller.navigateToPage('swipe');
             })
             .catch((err) => {
                 console.log(err);
