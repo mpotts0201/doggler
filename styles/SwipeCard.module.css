@@ -18,6 +18,7 @@
     /* top: calc(30vh - 225px); */
     top: 0vh;
     left: calc(50vw - 175px);
+    max-height: 65vh;
 }
 
 .info {

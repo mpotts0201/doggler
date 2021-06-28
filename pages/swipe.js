@@ -9,6 +9,7 @@ import axios from "axios";
 import styles from "../styles/Swipe.module.css";
 import {withRouter} from 'next/router';
 import actions from "app/config/store/actions"
+import Layout from "components/Layout";
 // if api is down, use this
 // import {demo_dogs} from "../data"; 
 
@@ -61,7 +62,7 @@ function Swipe(props) {
         return (
             <>
                 <InactiveCard key={dogs[1].id} dog={dogs[1]} />
-                <SwipeCard key={dogs[0].id} dog={dogs[0]} swipeOff={swipeOff} />
+                <SwipeCard {...props} key={dogs[0].id} dog={dogs[0]} swipeOff={swipeOff} />
             </>
         )
     };
@@ -73,17 +74,19 @@ function Swipe(props) {
     if (!loading && !dogs.length) return <h1>Out of swipes</h1>;
 
     return (
-        <div className={styles.container}>
-            <Header swipe={true}/>
-            {loading ? (
-                <Loader />
-            ) : (
-                    <>
-                        {renderCards()}
-                        <CardControls dog={dogs[0]} swipeOff={swipeOff} />
-                    </>
-                )}
-        </div>
+    <Layout {...props}>
+            <div className={styles.container}>
+                <Header {...props} swipe={true} />
+                {loading ? (
+                    <Loader />
+                ) : (
+                        <>
+                            {renderCards()}
+                            <CardControls dog={dogs[0]} swipeOff={swipeOff} />
+                        </>
+                    )}
+            </div>
+        </Layout>
     );
 }
 

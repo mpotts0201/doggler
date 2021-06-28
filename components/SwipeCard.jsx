@@ -43,20 +43,26 @@ export default function SwipeCard(props) {
         // iconApi.start({y: down ? -Math.abs(mx / 2) : -deltaX, opacity: down ? Math.abs(mx / (window.innerWidth / 2)) : 0, scale: down ? 1.5 : 1});
     });
 
+    const navigateToProfile = () => {
+        const {controller} = props;
+        console.log(props)
+        console.log(dog.id)
+
+        controller.navigateToPage('dog-profile', 'dogId', dog.id)
+    }
+
     return (
         <>
             <animated.div {...bindCard()} style={{x, touchAction: "none", rotateZ, scale: cardScale}} className={styles.card}>
                 <div className={styles.info}>
                     <div className={styles.textblock}>
                         {console.log('DOG ID: ', dog.id)}
-                        <Link href={{pathname: "/dog-profile", query: {dog_id: dog.id, user_id: props.user_id}}}>
-                            <div>
+                            <div onClick={navigateToProfile}>
                                 <h1 className={styles.name}>{dog.name}</h1>
                                 <h3 className={styles.description}>
                                     {dog.breed} | {dog.age}
                                 </h3>
                             </div>
-                        </Link>
                     </div>
                     <img draggable={false} src={dog.images[0]} alt="good boi" className={styles.image} />
                 </div>

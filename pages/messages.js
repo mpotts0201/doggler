@@ -6,8 +6,9 @@ import {withRouter} from 'next/router';
 import Layout from "../components/Layout";
 import Link from "next/link";
 
-function messages({userId}) {
+function messages(props) {
     const [dogs, setDogs] = useState([]);
+    const {userId} = props;
 
     useEffect(() => {
         getFavorites();
@@ -29,14 +30,20 @@ function messages({userId}) {
         })
     }
 
+    const navigateToProfile = (dog_id) => {
+        const {controller} = props;
+
+        controller.navigateToPage('dog-profile', 'dogId', dog_id)
+    }
+
     return (
-        <Layout>
+        <Layout {...props}>
             <h1 className={styles.header}>Messages</h1>
             <div className={styles["messages-container"]}>
                 {dogs.map((dog) => (
                     // <Link key={dog.id} href={{pathname: "/dog-profile", query: {dog_id: dog.id}}}>
-                        <div className={styles["message-row"]}>
-                            <div className={styles["message-row-left"]}>
+                        <div key={dog.id} className={styles["message-row"]}>
+                            <div onClick={() => navigateToProfile(dog.id)} className={styles["message-row-left"]}>
                                 <img className={styles["message-image"]} src={dog.images[0]} alt={dog.name} />
                                 <div className={styles["message-name"]}>{dog.name}</div>
                             </div>

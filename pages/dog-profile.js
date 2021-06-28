@@ -2,19 +2,13 @@ import React, {useState, useEffect} from "react";
 import Layout from "../components/Layout";
 import {withRouter} from 'next/router';
 import axios from "axios";
-import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 
-dogProfile.getInitialProps = ({query: {dog_id}}) => {
-    console.log(dog_id)
-    return {dog_id}
-}
-
-function dogProfile({dog_id}) {
+function dogProfile(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [dog, setDog] = useState({});
-
+    const dog_id = props.params.dogId
     useEffect(() => {
         const getDog = async () => {
             try {
@@ -31,12 +25,11 @@ function dogProfile({dog_id}) {
         getDog();
     }, []);
 
-    return <Layout>
+    return <Layout {...props}>
         <div>
             <div className={styles["profile-container"]}>
                 <div className={styles["headline-content"]}>
                     <div className={styles.left}>
-                        {console.log(dog.images)}
                         {dog.images && <img className={styles.image} src={dog.images[0]} alt={dog.name} />}
                         <div className={styles.name}>
                             <div>{dog.name}</div>

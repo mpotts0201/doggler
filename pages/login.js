@@ -63,7 +63,7 @@ export default function login(props) {
     // );
 
     return (
-        <Layout>
+        <Layout {...props}>
             <div className="column is-three-fifths is-offset-one-fifth">
                 <h1>Login</h1>
                 <br />

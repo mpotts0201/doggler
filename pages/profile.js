@@ -5,10 +5,11 @@ import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 
-function profile({userId}) {
+function profile(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState({});
+    const {userId} = props;
 
     useEffect(() => {
         const getUser = async () => {
@@ -26,7 +27,7 @@ function profile({userId}) {
         getUser();
     }, []);
 
-    return <Layout>
+    return <Layout {...props}>
         <div>
             <div className={styles["profile-container"]}>
                 <div className={styles["headline-content"]}>
