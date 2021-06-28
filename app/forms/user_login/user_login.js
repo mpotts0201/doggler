@@ -12,5 +12,5 @@ export default createForm(
             yup: yup.string().required("Please enter your password")
         }
     },
-    {secure: true}
+    {secure: false}
 );
