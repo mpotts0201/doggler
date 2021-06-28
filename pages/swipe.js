@@ -14,18 +14,14 @@ import actions from "app/config/store/actions"
 
 const {DogActions} = actions
 
-Swipe.getInitialProps = ({query: {user_id}}) => {
-    console.log(user_id)
-    return {user_id}
-}
-
 function Swipe(props) {
 
-    const {user_id, dispatch} = props
+    const {dispatch} = props
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     const dogs = useSelector(state => state.app.dogs.dogs)
+    const user_id = useSelector(state => state.app.router.params.userId)
 
     useEffect(() => {
         const getDogs = async () => {

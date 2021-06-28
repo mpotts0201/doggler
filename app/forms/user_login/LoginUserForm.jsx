@@ -3,7 +3,8 @@ import {Form, FormTextInput} from "../../../lib/forms/components";
 import createForm from "./user_login";
 import axios from "axios";
 import Router from "next/router";
-
+import actions from "app/config/store/actions"
+const {DogActions} = actions
 export default class LoginUserForm extends Component {
     constructor(props) {
         super(props);
@@ -16,25 +17,27 @@ export default class LoginUserForm extends Component {
         });
     }
 
-    handleSubmit = () => {
+    handleSubmit = (values, actions) => {
         // e.preventDefault();
-        const {values} = this.props;
-        console.log(values);
-        // axios
-        //     .post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password})
-        //     .then((data) => {
-        //         Router.push({pathname: "/swipe", query: {user_id: data.data[0].id}});
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         setState({error: "Invalid email or password"});
-        //     });
+        const {controller} = this.props;
+        console.log(controller)
+
+        axios
+            .post("http://localhost:3001/api/users/login", {email: values.email, encrypted_password: values.password})
+            .then((res) => {
+                controller.navigateToPage('swipe', 'userId', res.data.id)
+            })
+            .catch((err) => {
+                console.log(err);
+                // setState({error: "Invalid email or password"});
+            });
     };
 
     render() {
         return (
             <div>
                 <Form
+                    onSubmit={this.handleSubmit}
                     form={this.loginUserForm}
                     render={(props) => {
                         const {secure, values, errors, touched} = props;

@@ -11,6 +11,7 @@ const initialState = Immutable({
 function routerReducer(state = initialState, action) {
     switch (action.type) {
         case RouterConstants.SET_PARAMS:
+            console.log(action)
             return state.setIn(["params", action.id], action.value);
 
         case RouterConstants.SET_PAGE_NAME:

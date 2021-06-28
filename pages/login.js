@@ -4,7 +4,7 @@ import axios from "axios";
 import Router from "next/router";
 import LoginUserForm from "../app/forms/user_login/LoginUserForm";
 
-export default function login() {
+export default function login(props) {
     const [state, setState] = useState({
         name: "",
         email: "",
@@ -68,7 +68,7 @@ export default function login() {
                 <h1>Login</h1>
                 <br />
                 {/* {loginForm()} */}
-                <LoginUserForm />
+                <LoginUserForm {...props}/>
                 {state.error && <div style={{color: "red"}}>{state.error}</div>}
             </div>
         </Layout>
