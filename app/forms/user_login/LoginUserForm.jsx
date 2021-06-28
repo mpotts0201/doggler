@@ -16,19 +16,17 @@ export default class LoginUserForm extends Component {
         });
     }
 
-    handleSubmit = () => {
+    handleSubmit = (values) => {
         // e.preventDefault();
-        const {values} = this.props;
-        console.log(values);
-        // axios
-        //     .post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password})
-        //     .then((data) => {
-        //         Router.push({pathname: "/swipe", query: {user_id: data.data[0].id}});
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //         setState({error: "Invalid email or password"});
-        //     });
+        axios
+            .post("http://localhost:3001/api/users/login", {email: values.email, encrypted_password: values.password})
+            .then((data) => {
+                Router.push({pathname: "/swipe", query: {user_id: data.data.id}});
+            })
+            .catch((err) => {
+                console.log(err);
+                setState({error: "Invalid email or password"});
+            });
     };
 
     render() {

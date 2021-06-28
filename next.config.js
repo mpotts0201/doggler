@@ -1,7 +1,8 @@
-const withImages = require("next-images");
+// const withImages = require("next-images");
 const webpack = require("webpack");
 
-module.exports = withImages();
+// module.exports = withImages();
+// Find way to combine bundle analyzer with withImages
 
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
     enabled: process.env.ANALYZE === "true"
