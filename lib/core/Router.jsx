@@ -1,42 +1,43 @@
 import React, {Component} from "react";
 import Controller from "./controller";
-import {connect} from "react-redux";
+import Loader from "components/Loader";
+import actions from "app/config/store/actions";
+const {AuthActions} = actions;
 
 class Router extends Component {
     constructor(props) {
         super(props);
         this.controller = new Controller(props);
+        this.state = {
+            loading: true
+        };
     }
 
-    // componentDidMount() {
-    //     const {logged_in} = this.props;
-    //     if (!logged_in) {
-    //         this.controller.navigateToPage("/");
-    //     } else {
-    //         this.controller.navigateToPage("swipe");
-    //     }
-    // }
+    componentDidMount() {
+        const {dispatch} = this.props;
+        const userId = localStorage.getItem("userId");
+        if (userId) {
+            dispatch(AuthActions.SET_USER_ID(userId));
+            this.controller.navigateToPage("swipe");
+            this.setState({loading: false});
+        } else {
+            this.controller.navigateToPage("login");
+            this.setState({loading: false});
+        }
+    }
 
     render() {
-        const {Component, logged_in} = this.props;
+        const {Component} = this.props;
 
         const component_props = {
             ...this.props,
             controller: this.controller
         };
 
-        // if (!logged_in) return <Login {...component_props} />;
+        if (this.state.loading) return <Loader />;
 
-        return (
-                <Component {...component_props} />
-        );
+        return <Component {...component_props} />;
     }
 }
 
-const select = (state) => {
-    return {
-        logged_in: state.app.auth.logged_in
-    };
-};
-
-export default connect(select)(Router);
+export default Router;

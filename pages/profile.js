@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from "react";
 import Layout from "../components/Layout";
-import {withRouter} from 'next/router';
+import {withRouter} from "next/router";
 import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
+import actions from "app/config/store/actions";
+const {AuthActions} = actions;
 
 function profile(props) {
     const [loading, setLoading] = useState(true);
@@ -27,27 +29,41 @@ function profile(props) {
         getUser();
     }, []);
 
-    return <Layout {...props}>
-        <div>
-            <div className={styles["profile-container"]}>
-                <div className={styles["headline-content"]}>
-                    <div className={styles.left}>
-                        <img className={styles.image} src={user.image} alt={user.name} />
-                        <div className={styles.name}>
-                            <div>{user.name}</div>
-                            <div>{user.location}</div>
-                            <div>{user.gender} - {user.age}</div>
-                        </div>
-                    </div>
-                    {/* <div className={styles.right}></div> */}
-                </div>
+    const logout = () => {
+        const {controller, dispatch} = props;
+        localStorage.removeItem("userId");
+        dispatch(AuthActions.SET_USER_ID(null));
+        controller.navigateToPage("login");
+    };
 
-                <div className={styles["profile-content"]}>
-                    <div>{user.description}</div>
+    return (
+        <Layout {...props}>
+            <div>
+                <div className={styles["profile-container"]}>
+                    <div className={styles["headline-content"]}>
+                        <div className={styles.left}>
+                            <img className={styles.image} src={user.image} alt={user.name} />
+                            <div className={styles.name}>
+                                <div>{user.name}</div>
+                                <div>{user.location}</div>
+                                <div>
+                                    {user.gender} - {user.age}
+                                </div>
+                            </div>
+                        </div>
+                        {/* <div className={styles.right}></div> */}
+                    </div>
+
+                    <div className={styles["profile-content"]}>
+                        <div>{user.description}</div>
+                    </div>
                 </div>
+                <button className="button m-6" onClick={logout}>
+                    Log out
+                </button>
             </div>
-        </div>
-    </Layout>;
+        </Layout>
+    );
 }
 
-export default withRouter(profile)
+export default withRouter(profile);
