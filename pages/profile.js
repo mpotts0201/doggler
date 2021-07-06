@@ -5,12 +5,14 @@ import axios from "axios";
 import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 import actions from "app/config/store/actions";
+import UpdateUserForm from "app/forms/user_update/UpdateUserForm";
 const {AuthActions} = actions;
 
 function profile(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [user, setUser] = useState({});
+    const [showForm, setShowForm] = useState(false);
     const {userId} = props;
 
     useEffect(() => {
@@ -36,6 +38,10 @@ function profile(props) {
         controller.navigateToPage("login");
     };
 
+    const toggleForm = () => {
+        setShowForm(true);
+    };
+
     return (
         <Layout {...props}>
             <div>
@@ -58,9 +64,18 @@ function profile(props) {
                         <div>{user.description}</div>
                     </div>
                 </div>
-                <button className="button m-6" onClick={logout}>
-                    Log out
-                </button>
+                {showForm ? (
+                    <UpdateUserForm setUser={setUser} setShowForm={setShowForm} user={user} />
+                ) : (
+                    <>
+                        <button className="button m-6" onClick={toggleForm}>
+                            Update
+                        </button>
+                        <button className="button m-6" onClick={logout}>
+                            Log out
+                        </button>
+                    </>
+                )}
             </div>
         </Layout>
     );
