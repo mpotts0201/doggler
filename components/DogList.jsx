@@ -1,18 +1,19 @@
 import React from "react";
 import styles from "../styles/DogList.module.css";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function DogList(props) {
     // const {dogs} = props;
 
     return (
         <div className={styles.container}>
-            {dogs.map((dog) => {
-                return (
-                    <div key={dog.id} className={styles.list}>
-                        <img className={styles.image} src={dog.images[0]} alt={dog.name} />
-                    </div>
-                );
-            })}
+            <div className={styles.list}>
+                {dogs.map((dog) => {
+                    return <img key={dog.id} className={styles.image} src={dog.images[0]} alt={dog.name} />;
+                })}
+                <FontAwesomeIcon className={styles.icon} icon={faPlusCircle} size="6x" color="#DA3472" />
+            </div>
         </div>
     );
 }

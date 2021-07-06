@@ -1,16 +1,14 @@
 .container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    padding: 5%;
 }
 
 .list {
     display: flex;
-    flex-direction: column;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .image {
@@ -20,5 +18,12 @@
     object-fit: cover;
     object-position: 50% 50%;
     box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    margin: 20px;
+}
+
+.icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 20px;
 }
