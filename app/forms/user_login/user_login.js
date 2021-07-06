@@ -9,6 +9,7 @@ export default createForm(
         },
         password: {
             label: "Password",
+            type: "password",
             yup: yup.string().required("Please enter your password")
         }
     },
