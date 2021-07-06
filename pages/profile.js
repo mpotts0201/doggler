@@ -6,6 +6,7 @@ import Header from "../components/Header";
 import styles from "../styles/Profile.module.css";
 import actions from "app/config/store/actions";
 import UpdateUserForm from "app/forms/user_update/UpdateUserForm";
+import DogList from "../components/DogList";
 const {AuthActions} = actions;
 
 function profile(props) {
@@ -64,6 +65,7 @@ function profile(props) {
                         <div>{user.description}</div>
                     </div>
                 </div>
+                <DogList />
                 {showForm ? (
                     <UpdateUserForm setUser={setUser} setShowForm={setShowForm} user={user} />
                 ) : (
