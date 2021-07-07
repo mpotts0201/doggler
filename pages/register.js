@@ -65,9 +65,9 @@ export default function register() {
     );
 
     return (
-        <Layout>
+        <Layout showHeader={false}>
             <div className="column is-three-fifths is-offset-one-fifth">
-                <h1>Register</h1>
+                <h3 className="title">Register</h3>
                 <br />
                 {registerForm()}
             </div>

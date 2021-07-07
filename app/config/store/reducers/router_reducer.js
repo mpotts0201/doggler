@@ -4,14 +4,15 @@ import Immutable from "seamless-immutable";
 const {RouterConstants} = actions;
 
 const initialState = Immutable({
-    params: {},
+    params: {
+        dog_id: null
+    },
     page_name: ""
 });
 
 function routerReducer(state = initialState, action) {
     switch (action.type) {
         case RouterConstants.SET_PARAMS:
-            console.log(action)
             return state.setIn(["params", action.id], action.value);
 
         case RouterConstants.SET_PAGE_NAME:

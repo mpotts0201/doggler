@@ -21,7 +21,7 @@ class Router extends Component {
             this.controller.navigateToPage("swipe");
             this.setState({loading: false});
         } else {
-            this.controller.navigateToPage("login");
+            this.controller.navigateToPage("/");
             this.setState({loading: false});
         }
     }

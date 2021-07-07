@@ -4,6 +4,7 @@ import createForm from "./user_login";
 import axios from "axios";
 import Router from "next/router";
 import actions from "app/config/store/actions";
+import Api from "lib/api/api";
 const {AuthActions} = actions;
 export default class LoginUserForm extends Component {
     constructor(props) {
@@ -15,27 +16,32 @@ export default class LoginUserForm extends Component {
                 password: ""
             }
         });
+
+        this.state = {
+            error: null
+        };
     }
 
     handleSubmit = (values, actions) => {
-        // e.preventDefault();
         const {controller, dispatch} = this.props;
-        console.log(controller);
 
-        axios
-            .post("http://localhost:3001/api/users/login", {email: values.email, encrypted_password: values.password})
-            .then((res) => {
-                localStorage.setItem("userId", res.data.id);
-                dispatch(AuthActions.SET_USER_ID(res.data.id));
+        const payload = {
+            email: values.email,
+            encrypted_password: values.password
+        };
+
+        dispatch(Api.login)(payload)
+            .then(() => {
                 controller.navigateToPage("swipe");
             })
-            .catch((err) => {
-                console.log(err);
-                // setState({error: "Invalid email or password"});
+            .catch((error) => {
+                console.log("ERROR: ", error);
+                this.setState({error: "Login failed. Ensure your email address and password are valid and please try again"});
             });
     };
 
     render() {
+        const {error} = this.state;
         return (
             <div>
                 <Form
@@ -63,6 +69,7 @@ export default class LoginUserForm extends Component {
                                     {/* {!has_errors && <div className="icon-svg-form" dangerouslySetInnerHTML={{__html: check_circle_outline}} />} */}
                                     {touched[secure_password] && errors[secure_password] ? <div className="field-spacer error">{errors[secure_password]}</div> : <div className="field-spacer" />}
                                 </div>
+                                {error && <span style={{color: "red", fontSize: 12}}>{error}</span>}
                                 <button className="button is-dark is-fullwidth mt-6" disabled={!buttonReady} type="submit">
                                     Submit
                                 </button>

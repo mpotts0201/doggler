@@ -3,7 +3,7 @@ import React from "react";
 import Header from "./Header";
 import Navbar from "./Navbar";
 
-export default function Layout({children, controller}) {
+export default function Layout({children, controller, showHeader = true}) {
     return (
         <React.Fragment>
             <Head>
@@ -14,7 +14,7 @@ export default function Layout({children, controller}) {
             </Head>
 
             {/* <Navbar /> */}
-            <Header controller={controller} swipe={false} />
+            {showHeader && <Header controller={controller} swipe={false} />}
 
             {children}
         </React.Fragment>

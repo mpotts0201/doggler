@@ -22,12 +22,15 @@ export default function login(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password}).then((data) => {
-            Router.push({pathname: '/swipe', query: {user_id: data.data.id}})
-        }).catch((err) => {
-            console.log(err)
-            setState({error: 'Invalid email or password'})
-        })
+        axios
+            .post("http://localhost:3001/api/users/login", {email: state.email, encrypted_password: state.password})
+            .then((data) => {
+                Router.push({pathname: "/swipe", query: {user_id: data.data.id}});
+            })
+            .catch((err) => {
+                console.log(err);
+                setState({error: "Invalid email or password"});
+            });
     };
     // const handleSubmit = (e) => {
     //     e.preventDefault();
@@ -63,12 +66,11 @@ export default function login(props) {
     // );
 
     return (
-        <Layout {...props}>
+        <Layout showHeader={false} {...props}>
             <div className="column is-three-fifths is-offset-one-fifth">
-                <h1>Login</h1>
                 <br />
                 {/* {loginForm()} */}
-                <LoginUserForm {...props}/>
+                <LoginUserForm {...props} />
                 {state.error && <div style={{color: "red"}}>{state.error}</div>}
             </div>
         </Layout>

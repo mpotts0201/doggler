@@ -1,70 +1,56 @@
 import React, {useState, useEffect} from "react";
-import {useSelector} from 'react-redux'
+import {useSelector} from "react-redux";
 import SwipeCard from "../components/SwipeCard";
-import InactiveCard from "../components/InactiveCard";
 import Header from "../components/Header";
 import CardControls from "../components/CardControls";
 import Loader from "../components/Loader";
-import axios from "axios";
 import styles from "../styles/Swipe.module.css";
-import {withRouter} from 'next/router';
-import actions from "app/config/store/actions"
+import {withRouter} from "next/router";
+import actions from "app/config/store/actions";
 import Layout from "components/Layout";
+import Api from "lib/api/api";
 // if api is down, use this
-// import {demo_dogs} from "../data"; 
+// import {demo_dogs} from "../data";
 
-const {DogActions} = actions
+const {DogActions} = actions;
 
 function Swipe(props) {
-
-    const {userId, dispatch} = props
+    const {userId, dispatch} = props;
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const dogs = useSelector(state => state.app.dogs.dogs)
+    const dogs = useSelector((state) => state.app.dogs.dogs);
 
     useEffect(() => {
-        const getDogs = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3001/api/users/${userId}/dogs/getUserEligibleDogs`);
-                dispatch(DogActions.SET_DOG_DATA(res.data))
+        dispatch(Api.getDogs)(userId)
+            .then(() => {
                 setLoading(false);
-            } catch (error) {
+            })
+            .catch((error) => {
+                console.log("ERROR: ", error);
                 setError("Failed to get Dogs");
                 setLoading(false);
-                throw error;
-            }
-        };
-
-        getDogs();
+            });
     }, []);
 
     const swipeOff = (dog, liked = false) => {
         const {id} = dog;
 
         if (liked) {
-            axios
-                .post(`http://localhost:3001/api/users/${userId}/favorites`, {dog_id: id})
-                .then(() => {
-                    console.log(`Dog ${id} added!`);
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
+            Api.likeDog({dog_id: id}, userId);
         }
 
         const filteredDogs = dogs.filter((dog) => dog.id !== id);
-        dispatch(DogActions.SET_DOG_DATA(filteredDogs))
 
+        setTimeout(() => {
+            dispatch(DogActions.SET_DOG_DATA(filteredDogs));
+        }, 100);
     };
 
     const renderCards = () => {
-        return (
-            <>
-                <InactiveCard key={dogs[1].id} dog={dogs[1]} />
-                <SwipeCard {...props} key={dogs[0].id} dog={dogs[0]} swipeOff={swipeOff} />
-            </>
-        )
+        return [dogs[1], dogs[0]].map((dog, i) => {
+            return <SwipeCard {...props} key={dog.id} dog={dog} swipeOff={swipeOff} />;
+        });
     };
 
     if (loading) return <h1>Loading...</h1>;
@@ -74,20 +60,20 @@ function Swipe(props) {
     if (!loading && !dogs.length) return <h1>Out of swipes</h1>;
 
     return (
-    <Layout {...props}>
+        <Layout {...props}>
             <div className={styles.container}>
                 <Header {...props} swipe={true} />
                 {loading ? (
                     <Loader />
                 ) : (
-                        <>
-                            {renderCards()}
-                            <CardControls dog={dogs[0]} swipeOff={swipeOff} />
-                        </>
-                    )}
+                    <>
+                        {renderCards()}
+                        <CardControls dog={dogs[0]} swipeOff={swipeOff} />
+                    </>
+                )}
             </div>
         </Layout>
     );
 }
 
-export default withRouter(Swipe)
+export default withRouter(Swipe);
