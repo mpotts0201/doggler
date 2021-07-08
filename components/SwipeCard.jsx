@@ -57,7 +57,7 @@ export default function SwipeCard(props) {
                             </h3>
                         </div>
                     </div>
-                    <img draggable={false} src={dog.images[0] || "https://www.e-days.com/wp-content/uploads/2019/06/french-bulldog-dressed-as-businessman-works-at-6HFKQY8-1024x683.jpg"} alt="good boi" className={styles.image} />
+                    <img draggable={false} src={dog.images.length ? dog.images[0] : "https://www.e-days.com/wp-content/uploads/2019/06/french-bulldog-dressed-as-businessman-works-at-6HFKQY8-1024x683.jpg"} alt="good boi" className={styles.image} />
                 </div>
             </animated.div>
             <animated.div style={{y, touchAction: "none", scale: iconScale, opacity}} className={styles.icon}>
