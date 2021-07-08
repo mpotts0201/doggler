@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import styles from "../styles/DogList.module.css";
 import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useSelector} from "react-redux";
 
 export default function DogList(props) {
-    const {dogs, controller} = props;
+    const {controller} = props;
+
+    const dogs = useSelector((state) => state.app.profile.dogs);
 
     const handleNavigation = (id) => {
         controller.navigateToPage("/user-dog", "dog_id", id);

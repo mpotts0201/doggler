@@ -1,36 +1,32 @@
 import React, {useState, useEffect} from "react";
 import Layout from "../components/Layout";
 import {withRouter} from "next/router";
-import axios from "axios";
-import Header from "../components/Header";
+import Loader from "../components/Loader";
 import styles from "../styles/Profile.module.css";
 import actions from "app/config/store/actions";
 import UpdateUserForm from "app/forms/user_update/UpdateUserForm";
 import DogList from "../components/DogList";
-const {AuthActions, ProfileActions} = actions;
+import {useSelector} from "react-redux";
+import Api from "lib/api/api";
+const {AuthActions} = actions;
 
 function profile(props) {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [user, setUser] = useState({});
     const [showForm, setShowForm] = useState(false);
     const {userId, dispatch} = props;
+    const user = useSelector((state) => state.app.profile.user);
 
     useEffect(() => {
-        const getUser = async () => {
-            try {
-                const res = await axios.get(`http://localhost:3001/api/users/${userId}`);
-                console.log(res.data);
-                dispatch(ProfileActions.SET_USER(res.data));
-                setUser(res.data[0]);
+        dispatch(Api.getProfile)(userId)
+            .then(() => {
                 setLoading(false);
-            } catch (error) {
-                setError("Failed to get Dogs");
+            })
+            .catch((error) => {
+                console.log("ERROR: ", error);
+                setError("Unable to retrieve profile at this time");
                 setLoading(false);
-                throw error;
-            }
-        };
-        getUser();
+            });
     }, []);
 
     const logout = () => {
@@ -43,6 +39,10 @@ function profile(props) {
     const toggleForm = () => {
         setShowForm(true);
     };
+
+    if (loading) return <Loader />;
+
+    if (error) return <div>{error}</div>;
 
     return (
         <Layout {...props}>
@@ -66,9 +66,9 @@ function profile(props) {
                         <div>{user.description}</div>
                     </div>
                 </div>
-                <DogList dogs={dogs} {...props} />
+                <DogList {...props} />
                 {showForm ? (
-                    <UpdateUserForm setUser={setUser} setShowForm={setShowForm} user={user} />
+                    <UpdateUserForm dispatch={dispatch} setShowForm={setShowForm} user={user} />
                 ) : (
                     <>
                         <button className="button m-6" onClick={toggleForm}>
@@ -85,54 +85,3 @@ function profile(props) {
 }
 
 export default withRouter(profile);
-
-const dogs = [
-    {
-        id: "75676bd6-a356-453e-8e02-81ad8baeb49g",
-        name: "Ms. Birmingham",
-        description: "Reduced Ports synergistic Plastic copy Berkshire Handmade Loan Gorgeous Soft parse Consultant attitude-oriented Fresh recontextualize Bedfordshire Car matrix Customer Investor overriding Granite enable Security Soft plum synthesizing Summit Tuna Buckinghamshire",
-        breed: "Trigg Hound",
-        age: 0,
-        gender: "male",
-        user_id: "00c987a3-a6d8-429b-bf3f-8624761c5a30",
-        created_at: "2021-06-23T22:47:17.647Z",
-        updated_at: "2021-06-23T22:47:17.647Z",
-        images: ["http://placeimg.com/640/480/animals?random=86592", "http://placeimg.com/640/480/animals?random=71477", "http://placeimg.com/640/480/animals?random=86877", "http://placeimg.com/640/480/animals?random=46333", "http://placeimg.com/640/480/animals?random=97207"]
-    },
-    {
-        id: "75676bd6-a356-453e-8e02-81ad8baeb49f",
-        name: "Ms. Birmingham",
-        description: "Reduced Ports synergistic Plastic copy Berkshire Handmade Loan Gorgeous Soft parse Consultant attitude-oriented Fresh recontextualize Bedfordshire Car matrix Customer Investor overriding Granite enable Security Soft plum synthesizing Summit Tuna Buckinghamshire",
-        breed: "Trigg Hound",
-        age: 0,
-        gender: "male",
-        user_id: "00c987a3-a6d8-429b-bf3f-8624761c5a30",
-        created_at: "2021-06-23T22:47:17.647Z",
-        updated_at: "2021-06-23T22:47:17.647Z",
-        images: ["http://placeimg.com/640/480/animals?random=86592", "http://placeimg.com/640/480/animals?random=71477", "http://placeimg.com/640/480/animals?random=86877", "http://placeimg.com/640/480/animals?random=46333", "http://placeimg.com/640/480/animals?random=97207"]
-    },
-    {
-        id: "75676bd6-a356-453e-8e02-81ad8baeb496",
-        name: "Ms. Birmingham",
-        description: "Reduced Ports synergistic Plastic copy Berkshire Handmade Loan Gorgeous Soft parse Consultant attitude-oriented Fresh recontextualize Bedfordshire Car matrix Customer Investor overriding Granite enable Security Soft plum synthesizing Summit Tuna Buckinghamshire",
-        breed: "Trigg Hound",
-        age: 0,
-        gender: "male",
-        user_id: "00c987a3-a6d8-429b-bf3f-8624761c5a30",
-        created_at: "2021-06-23T22:47:17.647Z",
-        updated_at: "2021-06-23T22:47:17.647Z",
-        images: ["http://placeimg.com/640/480/animals?random=86592", "http://placeimg.com/640/480/animals?random=71477", "http://placeimg.com/640/480/animals?random=86877", "http://placeimg.com/640/480/animals?random=46333", "http://placeimg.com/640/480/animals?random=97207"]
-    },
-    {
-        id: "75676bd6-a356-453e-8e02-81ad8baeb49h",
-        name: "Ms. Birmingham",
-        description: "Reduced Ports synergistic Plastic copy Berkshire Handmade Loan Gorgeous Soft parse Consultant attitude-oriented Fresh recontextualize Bedfordshire Car matrix Customer Investor overriding Granite enable Security Soft plum synthesizing Summit Tuna Buckinghamshire",
-        breed: "Trigg Hound",
-        age: 0,
-        gender: "male",
-        user_id: "00c987a3-a6d8-429b-bf3f-8624761c5a30",
-        created_at: "2021-06-23T22:47:17.647Z",
-        updated_at: "2021-06-23T22:47:17.647Z",
-        images: ["http://placeimg.com/640/480/animals?random=86592", "http://placeimg.com/640/480/animals?random=71477", "http://placeimg.com/640/480/animals?random=86877", "http://placeimg.com/640/480/animals?random=46333", "http://placeimg.com/640/480/animals?random=97207"]
-    }
-];

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {Form, FormTextInput, FormSelectInput} from "../../../lib/forms/components";
 import createForm from "./user_update";
-import axios from "axios";
+import Api from "lib/api/api";
 
 export default class UpdateUserForm extends Component {
     constructor(props) {
@@ -21,17 +21,14 @@ export default class UpdateUserForm extends Component {
     }
 
     handleSubmit = (values) => {
-        const {user, setUser, setShowForm} = this.props;
+        const {user, setShowForm, dispatch} = this.props;
 
-        axios
-            .put(`http://localhost:3001/api/users/${user.id}`, values)
-            .then((res) => {
-                console.log(res.data[0]);
-                setUser(res.data[0]);
+        dispatch(Api.updateUserProfile)(user.id, values)
+            .then(() => {
                 setShowForm(false);
             })
-            .catch((err) => {
-                console.log(err);
+            .catch((error) => {
+                console.log("ERROR: ", error);
             });
     };
 
