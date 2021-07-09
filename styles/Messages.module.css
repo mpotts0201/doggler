@@ -1,37 +1,6 @@
-.header {
-    text-align: center;
-    margin-top: 0;
-}
-
-.messages-container {
+.container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    width: 100%;
-}
-
-.message-row {
-    display: flex;
-    justify-content: space-between;
-    border-top: 1px solid black;
-    padding: 10px;
-    align-items: center;
-}
-
-.message-row-left {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-
-}
-
-.unmatch {
-    color: red;
-}
-
-.message-image {
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-    margin-right: 10px;
+    width: 100vw;
 }
