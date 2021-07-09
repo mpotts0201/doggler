@@ -7,6 +7,8 @@ import {ref} from "yup";
 export default function DogMatchCard(props) {
     const {dog, navigateToProfile, unmatch} = props;
 
+    const removeTimeout = setTimeout;
+
     const clickRef = useRef(null);
 
     useEffect(() => {
@@ -19,12 +21,13 @@ export default function DogMatchCard(props) {
         document.addEventListener("mousedown", handleClickOutside);
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
+            clearTimeout(removeTimeout);
         };
     }, [clickRef]);
 
-    const [{x}, api] = useSpring(() => ({x: 0}));
+    const [{x, height, opacity}, api] = useSpring(() => ({x: 0, height: window.innerHeight * 0.08, opacity: 1}));
 
-    const bind = useDrag(({down, movement: [mx], velocity, direction: [xDir]}) => {
+    const swipeBind = useDrag(({down, movement: [mx], velocity, direction: [xDir]}) => {
         let deltaX = 0;
         const dir = xDir > 0 ? 1 : -1;
 
@@ -39,17 +42,25 @@ export default function DogMatchCard(props) {
         api.start({x: open ? openPosition : deltaX});
     });
 
+    const remove = () => {
+        api.start({height: 0, opacity: 0});
+
+        removeTimeout(() => {
+            unmatch(dog.id);
+        }, 1000);
+    };
+
     return (
-        <div ref={clickRef} key={dog.id} className={styles.container}>
-            <animated.div {...bind()} style={{x, touchAction: "none"}} className={styles.card}>
+        <animated.div style={{height, opacity}} ref={clickRef} key={dog.id} className={styles.container}>
+            <animated.div {...swipeBind()} style={{x, touchAction: "none"}} className={styles.card}>
                 <div className={styles.info} onClick={() => navigateToProfile(dog.id)}>
                     <img className={styles.image} src={dog.images[0]} alt={dog.name} />
                     <div className={styles.name}>{dog.name}</div>
                 </div>
             </animated.div>
-            <div onClick={() => unmatch(dog.id)} className={styles.remove}>
+            <div onClick={remove} className={styles.remove}>
                 REMOVE
             </div>
-        </div>
+        </animated.div>
     );
 }
