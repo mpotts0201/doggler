@@ -8,9 +8,7 @@ import styles from "../styles/Swipe.module.css";
 import {withRouter} from "next/router";
 import actions from "app/config/store/actions";
 import Layout from "components/Layout";
-import Api from "lib/api/api";
-// if api is down, use this
-// import {demo_dogs} from "../data";
+import {demo_dogs} from "data";
 
 const {DogActions} = actions;
 
@@ -22,22 +20,16 @@ function Swipe(props) {
     const dogs = useSelector((state) => state.app.dogs.dogs);
 
     useEffect(() => {
-        dispatch(Api.getDogs)(userId)
-            .then(() => {
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log("ERROR: ", error);
-                setError("Failed to get Dogs");
-                setLoading(false);
-            });
+        dispatch(DogActions.SET_DOG_DATA(demo_dogs));
+
+        setLoading(false);
     }, []);
 
     const swipeOff = (dog, liked = false) => {
         const {id} = dog;
 
         if (liked) {
-            Api.likeDog({dog_id: id}, userId);
+            // Api.likeDog({dog_id: id}, userId);
         }
 
         const filteredDogs = dogs.filter((dog) => dog.id !== id);
@@ -52,8 +44,6 @@ function Swipe(props) {
             return <SwipeCard {...props} key={dog.id} dog={dog} swipeOff={swipeOff} />;
         });
     };
-
-    if (loading) return <h1>Loading...</h1>;
 
     if (error) return <h1>{error}</h1>;
 
