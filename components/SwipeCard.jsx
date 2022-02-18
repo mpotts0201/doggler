@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from "../styles/SwipeCard.module.css";
 import {animated, useSpring} from "react-spring";
 import {useDrag} from "@use-gesture/react";
-import {faBone, faHeartBroken, faStar} from "@fortawesome/free-solid-svg-icons";
+import {faBone, faHeartBroken} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function SwipeCard(props) {
@@ -40,17 +40,12 @@ export default function SwipeCard(props) {
         iconApi.start({y: down ? -Math.abs(mx / 2) : -deltaX, opacity: down ? Math.abs(mx / (window.innerWidth / 2)) : 0, scale: down ? 1.5 : 1});
     });
 
-    const navigateToProfile = () => {
-        const {controller} = props;
-        controller.navigateToPage("dog-profile", "dogId", dog.id);
-    };
-
     return (
         <>
             <animated.div {...bindCard()} style={{x, touchAction: "none", rotateZ, scale: cardScale}} className={styles.card}>
                 <div className={styles.info}>
                     <div className={styles.textblock}>
-                        <div onClick={navigateToProfile}>
+                        <div>
                             <h1 className={styles.name}>{dog.name}</h1>
                             <h3 className={styles.description}>
                                 {dog.breed} | {dog.age}

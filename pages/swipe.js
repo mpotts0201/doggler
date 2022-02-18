@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from "react";
-import {useSelector} from "react-redux";
+import React from "react";
+import {useSelector, useDispatch} from "react-redux";
 import SwipeCard from "../components/SwipeCard";
 import Header from "../components/Header";
 import CardControls from "../components/CardControls";
@@ -8,28 +8,22 @@ import styles from "../styles/Swipe.module.css";
 import {withRouter} from "next/router";
 import actions from "app/config/store/actions";
 import Layout from "components/Layout";
-import {demo_dogs} from "data";
+import {useFetch} from "hooks";
 
 const {DogActions} = actions;
 
 function Swipe(props) {
-    const {userId, dispatch} = props;
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const {loading, error} = useFetch("/api/dogs", DogActions.SET_DOG_DATA);
 
     const dogs = useSelector((state) => state.app.dogs.dogs);
-
-    useEffect(() => {
-        dispatch(DogActions.SET_DOG_DATA(demo_dogs));
-
-        setLoading(false);
-    }, []);
+    const dispatch = useDispatch();
 
     const swipeOff = (dog, liked = false) => {
         const {id} = dog;
 
         if (liked) {
-            // Api.likeDog({dog_id: id}, userId);
+            // TODO: handle liked dogs from swiping
+            // Would be done with a server, would hydrate redux with liked dogs
         }
 
         const filteredDogs = dogs.filter((dog) => dog.id !== id);
@@ -45,9 +39,9 @@ function Swipe(props) {
         });
     };
 
-    if (error) return <h1>{error}</h1>;
+    if (error) return <h1>{error} (TODO: styled error component)</h1>;
 
-    if (!loading && !dogs.length) return <h1>Out of swipes</h1>;
+    if (!loading && !dogs.length) return <h1>Out of swipes (TODO: styled "Out of swipes" component)</h1>;
 
     return (
         <Layout {...props}>

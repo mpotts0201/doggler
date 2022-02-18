@@ -13,17 +13,6 @@ function messages(props) {
         getFavorites();
     }, []);
 
-    const getFavorites = () => {
-        axios
-            .get(`http://localhost:3001/api/users/${userId}/favorites`)
-            .then((res) => {
-                setDogs(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            });
-    };
-
     const unmatch = (dog_id) => {
         axios
             .delete(`http://localhost:3001/api/users/${userId}/unmatch/${dog_id}`)
@@ -35,17 +24,11 @@ function messages(props) {
             });
     };
 
-    const navigateToProfile = (dog_id) => {
-        const {controller} = props;
-
-        controller.navigateToPage("dog-profile", "dogId", dog_id);
-    };
-
     return (
         <Layout {...props}>
             <div className={styles.container}>
                 {dogs.map((dog) => (
-                    <DogMatchCard key={dog.id} dog={dog} unmatch={unmatch} navigateToProfile={navigateToProfile} />
+                    <DogMatchCard key={dog.id} dog={dog} unmatch={unmatch} />
                 ))}
             </div>
         </Layout>

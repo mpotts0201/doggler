@@ -12,11 +12,12 @@ export default function CardControls(props) {
             color: "red",
             onClick: () => props.swipeOff(dog)
         },
-        {
-            icon: faStar,
-            color: "lightblue",
-            onClick: () => props.swipeOff(dog)
-        },
+        // TODO: SUPER LIKE
+        // {
+        //     icon: faStar,
+        //     color: "lightblue",
+        //     onClick: () => props.swipeOff(dog)
+        // },
         {
             icon: faBone,
             color: "green",
